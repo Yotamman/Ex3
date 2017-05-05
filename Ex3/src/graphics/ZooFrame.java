@@ -1,15 +1,10 @@
 package graphics;
 
-import privateutil.BackgroundPanel;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 
 /**
@@ -21,16 +16,12 @@ import java.io.File;
  */
 public class ZooFrame extends JFrame {
 
-    private static final String PICTURESPATH = absolutePath() + "\\src\\graphics\\pictures\\";
-
-    private BufferedImage image;
-    private BackgroundPanel greenBg, noBg, imageBg;
-//    private JFrame zoo;
     private JMenuBar menuBar;
     private JMenu fileMenu, backgroundMenu, helpMenu;
     private JMenuItem exitMenuI, imageMenuI, greenMenuI, noneMenuI, helpMenuI;
     private ZooPanel zooPanel;
     private JPanel panel1;
+    private Color bgGreen = new Color(124, 201, 61);
 
     public ZooFrame(String name) {
         super(name);
@@ -38,28 +29,17 @@ public class ZooFrame extends JFrame {
         pack();
         setLocation(400, 200);
         setSize(1080, 720);
-        greenBg = new BackgroundPanel(new Color(46, 150, 51));
-        noBg = new BackgroundPanel(getBackground());
         imageBgInit();
     }
 
-    public static String absolutePath() {
-        return new File("").getAbsolutePath();
-    }
-
     public void imageBgInit() {
-        try {
-            image = ImageIO.read(new File(PICTURESPATH + "savanna.jpg"));
-        } catch (Exception e1) {
-            System.out.println("Cannot read file: " + e1);
-        }
-        imageBg = new BackgroundPanel(image);
+
     }
 
     public void menuInit() {
         menuBar = new JMenuBar();
         setZooPanel();
-        add(zooPanel, BorderLayout.SOUTH);
+        add(zooPanel);
         buildFileMenu();
         buildBackgroundMenu();
         buildHelpMenu();
@@ -68,7 +48,6 @@ public class ZooFrame extends JFrame {
 
     public void setZooPanel() {
         zooPanel = new ZooPanel(this);
-        zooPanel.init();
     }
 
     public ActionListener help1ActionListener() {
@@ -97,9 +76,7 @@ public class ZooFrame extends JFrame {
         ActionListener AL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setContentPane(greenBg);
-                setVisible(true);
-                add(zooPanel, BorderLayout.SOUTH);
+                zooPanel.setBackgroundColor(bgGreen);
             }
         };
         return AL;
@@ -109,9 +86,7 @@ public class ZooFrame extends JFrame {
         ActionListener AL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setContentPane(noBg);
-                setVisible(true);
-                add(zooPanel, BorderLayout.SOUTH);
+                zooPanel.setBackgroundColor(getBackground());
             }
         };
         return AL;
@@ -121,11 +96,8 @@ public class ZooFrame extends JFrame {
         ActionListener AL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setContentPane(imageBg);
-                setVisible(true);
-                add(zooPanel, BorderLayout.SOUTH);
+                zooPanel.setBackgroundImage();
             }
-
         };
         return AL;
     }

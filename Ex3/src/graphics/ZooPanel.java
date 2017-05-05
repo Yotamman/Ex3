@@ -1,13 +1,17 @@
 package graphics;
 
-import graphics.*;
 import animals.Animal;
+import plants.Lettuce;
 import plants.Plant;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +24,10 @@ import java.util.ArrayList;
 public class ZooPanel extends JPanel implements Runnable {
 
     private static final int MEAT = 0, CABBAGE = 1, LETTUCE = 2;
+    private JPanel buttonPanel;
+    public static final String PICTURESPATH = new File("").getAbsolutePath() + "\\src\\graphics\\pictures\\";
+    public static Image image, bgImage;
+    private Color bgColor;
     private JButton addAnimalZP;
     private JButton sleepZP;
     private JButton wakeUpZP;
@@ -33,9 +41,6 @@ public class ZooPanel extends JPanel implements Runnable {
     private Plant plant;
 
 
-//    private static final String BACKGROUND_PATH =
-
-
     public ZooPanel(JFrame frame) {
         addAnimalDia = new AddAnimalDialog(frame, this, "Add an Animal Dialog", false);
         addAnimalZP = new JButton("Add Animal");
@@ -45,16 +50,25 @@ public class ZooPanel extends JPanel implements Runnable {
         foodZP = new JButton("Food ");
         infoZP = new JButton("Info");
         exitZP = new JButton("Exit");
+        buttonPanel = new JPanel();
+        bgColor = getBackground();
+        setLayout(new BorderLayout());
+        try {
+            image = ImageIO.read(new File(PICTURESPATH + "savanna.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        init();
     }
 
     public void init() {
+
         addAnimalZP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addAnimalDia.setVisible(true);
             }
         });
-
 
 
 //        infoZP.addActionListener(new ActionListener() {
@@ -78,35 +92,37 @@ public class ZooPanel extends JPanel implements Runnable {
                         System.out.println("Meat");
                         break;
                     case LETTUCE:
-
+                        plant = new Lettuce();
                         break;
                     case CABBAGE:
                         System.out.println("Cabbage");
                         break;
-//                    ImageIcon meatIcon = new ImageIcon("meat.gif");
-//                    JLabel meatLabel = new JLabel();
-//                    meatLabel.setIcon(meatIcon);
-//                    meatLabel.setVisible(true);
-//                    getconadd(meatLabel);
-//                    BufferedImage meatIcon = ImageIO.read("C:\\Users\\Yotam\\Ex3\\src\\graphics\\pictures\\meat.gif");//it must be an image file, otherwise you'll get an exception
-//                    JLabel meatLabel = new JLabel();
-//                    meatLabel.setIcon(new ImageIcon(meatIcon));
-//                    getContentPane().add(meatLabel);
                 }
             }
         });
-        add(addAnimalZP);
-        add(sleepZP);
-        add(wakeUpZP);
-        add(clearZP);
-        add(foodZP);
-        add(infoZP);
-        add(exitZP);
+        buttonPanel.add(addAnimalZP);
+        buttonPanel.add(sleepZP);
+        buttonPanel.add(wakeUpZP);
+        buttonPanel.add(clearZP);
+        buttonPanel.add(foodZP);
+        buttonPanel.add(infoZP);
+        buttonPanel.add(exitZP);
+        add(buttonPanel, BorderLayout.SOUTH);
+        repaint();
+    }//end init()
+
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (bgImage != null) {
+            Dimension d = getSize();
+            g.drawImage(image, 0, 0, d.width, d.height, null);
+        } else if (bgColor != null) {
+            setBackground(bgColor);
+        }
+        g.drawImage(plant.PICTURE_PATH,)
     }
-
-    public void
-
-
 
     /**
      * When an object implementing interface <code>Runnable</code> is used
@@ -120,8 +136,21 @@ public class ZooPanel extends JPanel implements Runnable {
      * @see Thread#run()
      */
     @Override
+
     public void run() {
 
+    }
+
+    public void setBackgroundColor(Color bgColor) {
+        bgImage = null;
+        this.bgColor = bgColor;
+        repaint();
+    }
+
+    public void setBackgroundImage() {
+        bgColor = null;
+        bgImage = image;
+        repaint();
     }
 
     {

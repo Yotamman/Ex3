@@ -7,6 +7,7 @@ import mobility.ILocatable;
 import mobility.Point;
 import utilities.MessageUtility;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
@@ -17,22 +18,15 @@ import java.util.Random;
  * @see mobility.ILocatable
  */
 public abstract class Plant implements IEdible, ILocatable , IDrawable {
-	/**
-	 * 
-	 */
-	private double height;
-	/**
-	 * 
-	 */
-	private Point location;
-	/**
-	 * 
-	 */
-	private double weight;
 
-	/**
-	 * 
-	 */
+
+	private double height;
+	private Point location;
+	private double weight;
+	protected BufferedImage img;
+
+
+
 	public Plant() {
 		Random rand = new Random();
 		int x = rand.nextInt(30);
@@ -41,6 +35,7 @@ public abstract class Plant implements IEdible, ILocatable , IDrawable {
 		this.height = rand.nextInt(30);
 		this.weight = rand.nextInt(12);
 		MessageUtility.logConstractor("Plant", "Plant");
+		img=null;
 	}
 
 	/*
