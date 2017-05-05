@@ -1,11 +1,14 @@
 package graphics;
 
-import javax.imageio.ImageIO;
+import graphics.*;
+import animals.Animal;
+import plants.Plant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Descripiton
@@ -16,6 +19,7 @@ import java.awt.image.BufferedImage;
  */
 public class ZooPanel extends JPanel implements Runnable {
 
+    private static final int MEAT = 0, CABBAGE = 1, LETTUCE = 2;
     private JButton addAnimalZP;
     private JButton sleepZP;
     private JButton wakeUpZP;
@@ -23,9 +27,18 @@ public class ZooPanel extends JPanel implements Runnable {
     private JButton foodZP;
     private JButton infoZP;
     private JButton exitZP;
+    private AddAnimalDialog addAnimalDia;
+
+    private Thread controller; // data member of class ZooPanel
+    private ArrayList<Animal> animals;
+    private Plant plant;
 
 
-    public ZooPanel() {
+//    private static final String BACKGROUND_PATH =
+
+
+    public ZooPanel(JFrame frame) {
+        addAnimalDia = new AddAnimalDialog(frame, this, "Add an Animal Dialog", false);
         addAnimalZP = new JButton("Add Animal");
         sleepZP = new JButton("Sleep");
         wakeUpZP = new JButton("Wake up");
@@ -39,9 +52,12 @@ public class ZooPanel extends JPanel implements Runnable {
         addAnimalZP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddAnimal addAnimal = new AddAnimal("Add an Animal Dialog");
+                addAnimalDia.setVisible(true);
+
             }
         });
+
+
 
 //        infoZP.addActionListener(new ActionListener() {
 //            @Override
@@ -52,30 +68,35 @@ public class ZooPanel extends JPanel implements Runnable {
 //            }
 //        });
 //
-//        foodZP.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                Object[] choices = {"Meat", "Cabbage", "Lettuce"};
-//                int choice = JOptionPane.showOptionDialog(null, "Please Choose Food", "Food for Animals",
-//                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-//                        null, choices, choices[0]);
-//                if (choice == 0) {
-//                    System.out.println("Meat");
-////                    ImageIcon meatIcon = new ImageIcon("meat.gif");
-////                    JLabel meatLabel = new JLabel();
-////                    meatLabel.setIcon(meatIcon);
-////                    meatLabel.setVisible(true);
-////                    getconadd(meatLabel);
-//                    BufferedImage meatIcon = ImageIO.read("C:\Users\Yotam\Ex3\src\graphics\pictures\meat.gif");//it must be an image file, otherwise you'll get an exception
+        foodZP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] choices = {"Meat", "Cabbage", "Lettuce"};
+                int choice = JOptionPane.showOptionDialog(null, "Please Choose Food", "Food for Animals",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        null, choices, choices[0]);
+                switch (choice) {
+                    case MEAT:
+                        System.out.println("Meat");
+                        break;
+                    case LETTUCE:
+                        System.out.println("Lettuce");
+                        break;
+                    case CABBAGE:
+                        System.out.println("Cabbage");
+                        break;
+//                    ImageIcon meatIcon = new ImageIcon("meat.gif");
+//                    JLabel meatLabel = new JLabel();
+//                    meatLabel.setIcon(meatIcon);
+//                    meatLabel.setVisible(true);
+//                    getconadd(meatLabel);
+//                    BufferedImage meatIcon = ImageIO.read("C:\\Users\\Yotam\\Ex3\\src\\graphics\\pictures\\meat.gif");//it must be an image file, otherwise you'll get an exception
 //                    JLabel meatLabel = new JLabel();
 //                    meatLabel.setIcon(new ImageIcon(meatIcon));
 //                    getContentPane().add(meatLabel);
-//                }
-//
-//
-//            }
-//        });
-
+                }
+            }
+        });
 
         add(addAnimalZP);
         add(sleepZP);
