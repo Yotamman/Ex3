@@ -93,6 +93,7 @@ public class ZooPanel extends JPanel implements Runnable {
                         break;
                     case LETTUCE:
                         plant = new Lettuce();
+                        repaint();
                         break;
                     case CABBAGE:
                         System.out.println("Cabbage");
@@ -114,14 +115,17 @@ public class ZooPanel extends JPanel implements Runnable {
 
     @Override
     protected void paintComponent(Graphics g) {
+        Dimension d = getSize();
         super.paintComponent(g);
         if (bgImage != null) {
-            Dimension d = getSize();
             g.drawImage(image, 0, 0, d.width, d.height, null);
         } else if (bgColor != null) {
             setBackground(bgColor);
         }
-        g.drawImage(plant.PICTURE_PATH,)
+        if (plant != null) {
+            plant.loadImages("");
+            g.drawImage(plant.getImg(), getWidth() / 2, getHeight() / 2, plant.getImg().getWidth() / 4, plant.getImg().getHeight() / 4, null);
+        }
     }
 
     /**

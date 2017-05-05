@@ -20,10 +20,10 @@ import java.io.IOException;
 public class Lettuce extends Plant {
 	public final static String PICTURE_PATH = ZooPanel.PICTURESPATH+"lettuce.png";
 
-
 	public Lettuce() {
 		MessageUtility.logConstractor("Lettuce", "Lettuce");
 	}
+
 
 	@Override
 	public void loadImages(String nm) {

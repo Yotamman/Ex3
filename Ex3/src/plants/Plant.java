@@ -123,11 +123,17 @@ public abstract class Plant implements IEdible, ILocatable , IDrawable {
 		return isSuccess;
 	}
 
+	public BufferedImage getImg() {
+		return img;
+	}
+
+
+
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
 		return "[" + this.getClass().getSimpleName() + "] ";

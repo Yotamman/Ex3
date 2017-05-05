@@ -55,7 +55,6 @@ public class AddAnimalDialog extends JFrame {
         setBounds(600,300,600,500);
         layout=new GridLayout(0, 2,50,23);
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     public boolean setParentFrame(JFrame parentFrame) {
