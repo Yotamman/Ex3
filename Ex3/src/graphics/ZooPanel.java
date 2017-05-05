@@ -28,7 +28,6 @@ public class ZooPanel extends JPanel implements Runnable {
     private JButton infoZP;
     private JButton exitZP;
     private AddAnimalDialog addAnimalDia;
-
     private Thread controller; // data member of class ZooPanel
     private ArrayList<Animal> animals;
     private Plant plant;
@@ -53,7 +52,6 @@ public class ZooPanel extends JPanel implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addAnimalDia.setVisible(true);
-
             }
         });
 
@@ -80,7 +78,7 @@ public class ZooPanel extends JPanel implements Runnable {
                         System.out.println("Meat");
                         break;
                     case LETTUCE:
-                        System.out.println("Lettuce");
+
                         break;
                     case CABBAGE:
                         System.out.println("Cabbage");
@@ -97,7 +95,6 @@ public class ZooPanel extends JPanel implements Runnable {
                 }
             }
         });
-
         add(addAnimalZP);
         add(sleepZP);
         add(wakeUpZP);
@@ -106,6 +103,9 @@ public class ZooPanel extends JPanel implements Runnable {
         add(infoZP);
         add(exitZP);
     }
+
+    public void
+
 
 
     /**

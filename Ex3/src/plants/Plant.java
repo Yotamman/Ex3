@@ -2,6 +2,7 @@ package plants;
 
 import food.EFoodType;
 import food.IEdible;
+import graphics.IDrawable;
 import mobility.ILocatable;
 import mobility.Point;
 import utilities.MessageUtility;
@@ -15,7 +16,7 @@ import java.util.Random;
  * @see food.IEdible
  * @see mobility.ILocatable
  */
-public abstract class Plant implements IEdible, ILocatable /**, IDrawable **/{
+public abstract class Plant implements IEdible, ILocatable , IDrawable {
 	/**
 	 * 
 	 */
