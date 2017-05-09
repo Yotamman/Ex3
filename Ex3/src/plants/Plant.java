@@ -7,7 +7,12 @@ import mobility.ILocatable;
 import mobility.Point;
 import utilities.MessageUtility;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -24,6 +29,7 @@ public abstract class Plant implements IEdible, ILocatable , IDrawable {
 	private Point location;
 	private double weight;
 	protected BufferedImage img;
+	protected JPanel panel;
 
 
 
@@ -36,6 +42,10 @@ public abstract class Plant implements IEdible, ILocatable , IDrawable {
 		this.weight = rand.nextInt(12);
 		MessageUtility.logConstractor("Plant", "Plant");
 		img=null;
+	}
+	public Plant(JPanel panel){
+		this();
+		this.panel=panel;
 	}
 
 	/*
@@ -119,15 +129,37 @@ public abstract class Plant implements IEdible, ILocatable , IDrawable {
 			this.weight = 0;
 		}
 		MessageUtility.logSetter(this.getClass().getSimpleName(), "setWeight", weight, isSuccess);
-
 		return isSuccess;
 	}
 
-	public BufferedImage getImg() {
-		return img;
+	@Override
+	public void loadImages(String nm) {
+		if(this instanceof Lettuce) {
+			try {
+				img = ImageIO.read(new File("src\\graphics\\pictures\\lettuce.png"));
+			} catch (IOException e) {
+				System.out.println("Cannot load image");
+			}
+		}
+		if(this instanceof Cabbage){
+			try {
+				img = ImageIO.read(new File("src\\graphics\\pictures\\cabbage.png"));
+			} catch (IOException e) {
+				System.out.println("Cannot load image");
+			}
+		}
 	}
 
+	@Override
+	public void drawObject(Graphics g) {
+		loadImages("");
+			g.drawImage(img, panel.getWidth()/2, panel.getHeight()/2, img.getWidth() / 4, img.getHeight() / 4, null);
+		}
 
+	@Override
+	public String getColor() {
+		return null;
+	}
 
 	/*
          * (non-Javadoc)

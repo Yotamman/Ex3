@@ -1,8 +1,6 @@
 package plants;
 
-import utilities.MessageUtility;
-
-import java.awt.*;
+import javax.swing.*;
 
 /**
  * represent a Cabbage.
@@ -13,22 +11,10 @@ import java.awt.*;
  * @see food.IEdible
  */
 public class Cabbage extends Plant {
-	public Cabbage() {
-		MessageUtility.logConstractor("Cabbage", "Cabbage");
+
+	public Cabbage(JPanel panel) {
+		super(panel);
+		/*MessageUtility.logConstractor("Cabbage", "Cabbage");*/
 	}
 
-	@Override
-	public void loadImages(String nm) {
-
-	}
-
-	@Override
-	public void drawObject(Graphics g) {
-
-	}
-
-	@Override
-	public String getColor() {
-		return null;
-	}
 }

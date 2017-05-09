@@ -1,6 +1,7 @@
 package graphics;
 
 import animals.Animal;
+import plants.Cabbage;
 import plants.Lettuce;
 import plants.Plant;
 
@@ -25,9 +26,7 @@ public class ZooPanel extends JPanel implements Runnable {
 
     private static final int MEAT = 0, CABBAGE = 1, LETTUCE = 2;
     private JPanel buttonPanel;
-    public static final String PICTURESPATH = new File("").getAbsolutePath() + "\\src\\graphics\\pictures\\";
-    public static Image image, bgImage;
-    private Color bgColor;
+    private Object background;
     private JButton addAnimalZP;
     private JButton sleepZP;
     private JButton wakeUpZP;
@@ -39,6 +38,8 @@ public class ZooPanel extends JPanel implements Runnable {
     private Thread controller; // data member of class ZooPanel
     private ArrayList<Animal> animals;
     private Plant plant;
+    private BufferedImage meatImg;
+    private JTable animalsTable;
 
 
     public ZooPanel(JFrame frame) {
@@ -51,18 +52,23 @@ public class ZooPanel extends JPanel implements Runnable {
         infoZP = new JButton("Info");
         exitZP = new JButton("Exit");
         buttonPanel = new JPanel();
-        bgColor = getBackground();
+        plant = null;
+        meatImg = null;
         setLayout(new BorderLayout());
-        try {
-            image = ImageIO.read(new File(PICTURESPATH + "savanna.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         init();
     }
 
-    public void init() {
+    public void initLettuce(){
+        plant=new Lettuce(this);
+        meatImg=null;
+    }
 
+    public void initCabbage(){
+        plant=new Cabbage(this);
+        meatImg=null;
+    }
+
+    public void init() {
         addAnimalZP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,6 +86,7 @@ public class ZooPanel extends JPanel implements Runnable {
 //            }
 //        });
 //
+
         foodZP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,18 +96,42 @@ public class ZooPanel extends JPanel implements Runnable {
                         null, choices, choices[0]);
                 switch (choice) {
                     case MEAT:
-                        System.out.println("Meat");
+                        try {
+                            meatImg = ImageIO.read(new File("src\\graphics\\pictures\\Meat.gif"));
+                        } catch (IOException e1) {
+                            System.out.println("Cannot load image" + "src\\graphics\\pictures\\Meat.gif");
+                        }
+                        repaint();
                         break;
                     case LETTUCE:
-                        plant = new Lettuce();
+                        initLettuce();
                         repaint();
                         break;
                     case CABBAGE:
-                        System.out.println("Cabbage");
+                        initCabbage();
+                        repaint();
                         break;
                 }
             }
         });
+
+
+ /*       infoZP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] columnNames = {"Animal",`
+                        "Color",
+                        "Weight",
+                        "Hor. Speed",
+                        "Ver. Speed",
+                        "Eat Counter"};
+
+                String [][] data ={animals.add(new Bear("Baloo"))
+
+                };
+
+            }
+        });*/
         buttonPanel.add(addAnimalZP);
         buttonPanel.add(sleepZP);
         buttonPanel.add(wakeUpZP);
@@ -115,17 +146,16 @@ public class ZooPanel extends JPanel implements Runnable {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Dimension d = getSize();
         super.paintComponent(g);
-        if (bgImage != null) {
-            g.drawImage(image, 0, 0, d.width, d.height, null);
-        } else if (bgColor != null) {
-            setBackground(bgColor);
+        if (background instanceof Image) {
+            g.drawImage((Image) background, 0, 0, getWidth(), getHeight(), null);
+        } else if (background instanceof Color) {
+            setBackground((Color) background);
         }
-        if (plant != null) {
-            plant.loadImages("");
-            g.drawImage(plant.getImg(), getWidth() / 2, getHeight() / 2, plant.getImg().getWidth() / 4, plant.getImg().getHeight() / 4, null);
-        }
+        if (plant != null)
+            plant.drawObject(g);
+        if (meatImg != null)
+            g.drawImage(meatImg, getWidth() / 2, getHeight() / 2, meatImg.getWidth() / 4, meatImg.getHeight() / 4, null);
     }
 
     /**
@@ -146,35 +176,12 @@ public class ZooPanel extends JPanel implements Runnable {
     }
 
     public void setBackgroundColor(Color bgColor) {
-        bgImage = null;
-        this.bgColor = bgColor;
+        background = bgColor;
         repaint();
     }
 
-    public void setBackgroundImage() {
-        bgColor = null;
-        bgImage = image;
+    public void setBackgroundImage(Image bgImage) {
+        background = bgImage;
         repaint();
-    }
-
-    {
-// GUI initializer generated by IntelliJ IDEA GUI Designer
-// >>> IMPORTANT!! <<<
-// DO NOT EDIT OR ADD ANY CODE HERE!
-        $$$setupUI$$$();
-    }
-
-    /**
-     * Method generated by IntelliJ IDEA GUI Designer
-     * >>> IMPORTANT!! <<<
-     * DO NOT edit this method OR call it in your code!
-     *
-     * @noinspection ALL
-     */
-    private void $$$setupUI$$$() {
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 }

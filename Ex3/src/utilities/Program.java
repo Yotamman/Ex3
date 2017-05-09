@@ -1,3 +1,4 @@
+/*
 package utilities;
 
 import animals.*;
@@ -10,10 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+*/
 /**
  * @author baroh
  *
- */
+ *//*
+
 public class Program {
 
 	private static List<Animal> animals;
@@ -117,3 +120,4 @@ public class Program {
 	}
 
 }
+*/

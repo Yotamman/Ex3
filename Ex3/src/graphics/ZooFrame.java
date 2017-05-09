@@ -1,10 +1,13 @@
 package graphics;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -21,33 +24,31 @@ public class ZooFrame extends JFrame {
     private JMenuItem exitMenuI, imageMenuI, greenMenuI, noneMenuI, helpMenuI;
     private ZooPanel zooPanel;
     private JPanel panel1;
-    private Color bgGreen = new Color(124, 201, 61);
+    private Color bgGreen;
+    private Image bgImage;
 
     public ZooFrame(String name) {
         super(name);
+        bgGreen = new Color(124, 201, 61);
+        try {
+            bgImage = ImageIO.read(new File("src\\graphics\\pictures\\savanna.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocation(400, 200);
         setSize(1080, 720);
-        imageBgInit();
-    }
-
-    public void imageBgInit() {
-
+        menuInit();
     }
 
     public void menuInit() {
         menuBar = new JMenuBar();
-        setZooPanel();
+        zooPanel = new ZooPanel(this);
         add(zooPanel);
         buildFileMenu();
         buildBackgroundMenu();
         buildHelpMenu();
         setVisible(true);
-    }
-
-    public void setZooPanel() {
-        zooPanel = new ZooPanel(this);
     }
 
     public ActionListener help1ActionListener() {
@@ -72,7 +73,7 @@ public class ZooFrame extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public ActionListener greenActionListener() {
+    private ActionListener greenActionListener() {
         ActionListener AL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +97,7 @@ public class ZooFrame extends JFrame {
         ActionListener AL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                zooPanel.setBackgroundImage();
+                zooPanel.setBackgroundImage(bgImage);
             }
         };
         return AL;
@@ -144,7 +145,7 @@ public class ZooFrame extends JFrame {
 
     public static void main(String[] args) {
         ZooFrame zooFrame = new ZooFrame("Zoo");
-        zooFrame.menuInit();
+        zooFrame.setLocationRelativeTo(null);
 //        AddAnimalDialog addAnimal = new AddAnimalDialog("Add an Animal Dialog");
 //        addAnimal.setVisible(true);
     }

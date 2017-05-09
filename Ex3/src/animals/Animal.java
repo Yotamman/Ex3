@@ -2,6 +2,7 @@ package animals;
 
 import diet.IDiet;
 import food.IEdible;
+import graphics.IDrawable;
 import graphics.ZooPanel;
 import mobility.Mobile;
 import mobility.Point;
@@ -22,7 +23,8 @@ import java.awt.image.BufferedImage;
  * @see food.IEdible
  * @see mobility.ILocatable
  */
-public abstract class Animal extends Mobile implements IEdible/**IDrawable IAnimalBehavior, Runnable **/{
+public abstract class Animal extends Mobile implements IEdible, IDrawable/*, IAnimalBehavior*/, Runnable {
+
     private double weight;
     protected String name;
     private IDiet diet;//used for Eating appropriate food
@@ -39,7 +41,6 @@ public abstract class Animal extends Mobile implements IEdible/**IDrawable IAnim
     protected ZooPanel pan;
     protected boolean threadSuspended;
     protected BufferedImage img1, img2;
-
 
     public Animal(String name,Point location) {
         super(location);

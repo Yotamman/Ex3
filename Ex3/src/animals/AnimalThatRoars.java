@@ -19,13 +19,9 @@ public abstract class AnimalThatRoars extends Animal {
     /**
      * Implements the makeSound Method of Animal, based on the relevant animal
      */
-    @Override
-    public void makeSound() {
 
-        if (this instanceof Bear)
-            ((Bear)this).roar();
-        if (this instanceof Lion)
-            ((Lion)this).roar();
+    public void makeSound() {
+        this.makeSound();
     }
 
     /**

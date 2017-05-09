@@ -2,6 +2,7 @@ package graphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Descripiton
@@ -11,7 +12,7 @@ import java.awt.*;
  * @see
  */
 @SuppressWarnings("ALL")
-public class AddAnimalDialog extends JFrame {
+public class AddAnimalDialog extends JDialog {
 
     private final static String[] ANIMALS = {"Lion", "Bear", "Giraffe", "Elephant", "Turtle"};
     private final static String[] COLORS = {"Natural", "Red", "Blue"};
@@ -33,7 +34,7 @@ public class AddAnimalDialog extends JFrame {
     private JButton cancelButton;
 
     public AddAnimalDialog(JFrame frame,JPanel panel,String name,boolean visible) {
-        super(name);
+        setName(name);
         setParentFrame(frame);
         setParentPanel(panel);
         guiInit();
@@ -43,18 +44,15 @@ public class AddAnimalDialog extends JFrame {
     }
 
     public AddAnimalDialog(String name) {
-        super(name);
+        this.setName(name);
         guiInit();
         initPanel();
         pack();
-
     }
-
 
     private void guiInit(){
         setBounds(600,300,600,500);
         layout=new GridLayout(0, 2,50,23);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public boolean setParentFrame(JFrame parentFrame) {
@@ -68,7 +66,6 @@ public class AddAnimalDialog extends JFrame {
     }
 
     private void initPanel() {
-
         setLayout(layout);
         //Choose an Animal Label
         chooseLabel = new JLabel("Choose an Animal:");
@@ -104,6 +101,7 @@ public class AddAnimalDialog extends JFrame {
 
         okButton = new JButton("OK");
         add(okButton);
+        okButton.addActionListener(ActionPe);
         cancelButton = new JButton("Cancel");
         add(cancelButton);
     }//end initPanel

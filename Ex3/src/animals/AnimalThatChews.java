@@ -20,13 +20,7 @@ public abstract class AnimalThatChews extends Animal {
      */
     @Override
     public void makeSound() {
-
-        if (this instanceof Giraffe)
-            ((Giraffe)this).chew();
-        if (this instanceof Elephant)
-            ((Elephant)this).chew();
-        if (this instanceof Turtle)
-            ((Turtle)this).chew();
+        this.makeSound();
     }
 
     public abstract void chew();
